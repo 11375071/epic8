@@ -36,14 +36,24 @@ def threaded_client(conn, p, gameId):
                 if not data:
                     break
                 else:
-                    if data == "reset":
-                        game.resetWent()
-                    elif data == "p1+1":
-                        game.up(0)
-                    elif data == "p2+1":
-                        game.up(1)
-                    elif data != "get":
-                        game.play(p, data)    
+
+                    if data == "0anj_atk":
+                        game.up_atk(0, 0)
+                    elif data == "1anj_atk":
+                        game.up_atk(1, 0) 
+                    elif data == "0lan_atk":
+                        game.up_atk(0, 1)
+                    elif data == "1lan_atk":
+                        game.up_atk(1, 1) 
+                    if data == "0anj_hp":
+                        game.up_hp(0, 0)
+                    elif data == "1anj_hp":
+                        game.up_hp(1, 0) 
+                    elif data == "0lan_hp":
+                        game.up_hp(0, 1)
+                    elif data == "1lan_hp":
+                        game.up_hp(1, 1) 
+                    
 
                     conn.sendall(pickle.dumps(game))
             else:
