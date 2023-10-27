@@ -35,7 +35,7 @@ class Button:
 
 def redrawWindow(win, game, p):
     win.fill((128,128,128))
-
+    print(game.p1Went, game.hp1)
     if not(game.connected()):
         font = pygame.font.SysFont("comicsans", 80)
         text = font.render("Waiting for Player...", 1, (255,0,0), True)

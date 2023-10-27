@@ -12,11 +12,12 @@ class character():
         pygame.draw.rect(win,(255,255,255),(60,60,200,360),0)
         a=pygame.font.SysFont('幼圆',32)
         text1= a.render('hp:'+str(int(self.hp)),True,(255,0,0))
-        win.blit(text1,(80,80))  
+        win.blit(text1,(80,80)) 
 
 class Game():
     def __init__(self):
         self.character1=character(2500,2500,1200,1200,12500,12500)
+        self.character2=character(2500,2500,1200,1200,12500,12500)
         self.leveluppoint=40
 
 
