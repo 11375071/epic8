@@ -3,9 +3,9 @@ from _thread import *
 import pickle
 from game import Game
 
-server = "183.172.134.98"
+server = "183.172.132.113"
 port = 5555
-
+print(server)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -36,24 +36,32 @@ def threaded_client(conn, p, gameId):
                 if not data:
                     break
                 else:
-
-                    if data == "0anj_atk":
-                        game.up_atk(0, 0)
-                    elif data == "1anj_atk":
-                        game.up_atk(1, 0) 
-                    elif data == "0lan_atk":
-                        game.up_atk(0, 1)
-                    elif data == "1lan_atk":
-                        game.up_atk(1, 1) 
-                    if data == "0anj_hp":
-                        game.up_hp(0, 0)
-                    elif data == "1anj_hp":
-                        game.up_hp(1, 0) 
-                    elif data == "0lan_hp":
-                        game.up_hp(0, 1)
-                    elif data == "1lan_hp":
-                        game.up_hp(1, 1) 
                     
+                    if data == "get":
+                        pass
+                        
+                    if data[-5:] == "95559":
+                        player, id, lv, k = data.split('I')
+                        player, id, lv = int(player), int(id), int(lv)
+                        game.up_lv(player, id, lv)
+                        game.point_consume(player,id,lv)
+                    
+                    if data[-5:] == "75884":
+                        player, id, lv, num, k = data.split('I')
+                        player, id, lv, num = int(player), int(id), int(lv), int(num)
+                        game.extra_up(player, id, lv, num)
+
+                    if data[-5:] == "36912":
+                        print(data)
+                        player, id, lv, k = data.split('I')
+                        player, id, lv = int(player), int(id), int(lv)
+                        game.reset(player, id, lv)
+                    
+                    if data[-5:] == "65536":
+                        print(data)
+                        player, id, lv, k = data.split('I')
+                        player, id, lv = int(player), int(id), int(lv)
+                        game.skill_points(player, id, lv)
 
                     conn.sendall(pickle.dumps(game))
             else:
