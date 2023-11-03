@@ -3,7 +3,7 @@ from _thread import *
 import pickle
 from game import Game
 
-server = "183.172.132.113"
+server = "183.172.128.110"
 port = 5555
 print(server)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,28 +40,47 @@ def threaded_client(conn, p, gameId):
                     if data == "get":
                         pass
                         
-                    if data[-5:] == "95559":
+                    if data[-5:] == "clvup":
                         player, id, lv, k = data.split('I')
                         player, id, lv = int(player), int(id), int(lv)
                         game.up_lv(player, id, lv)
                         game.point_consume(player,id,lv)
                     
-                    if data[-5:] == "75884":
+                    if data[-5:] == "elvup":
+                        print("extra_lv_up")
                         player, id, lv, num, k = data.split('I')
                         player, id, lv, num = int(player), int(id), int(lv), int(num)
                         game.extra_up(player, id, lv, num)
 
-                    if data[-5:] == "36912":
-                        print(data)
+                    if data[-5:] == "reset":
                         player, id, lv, k = data.split('I')
                         player, id, lv = int(player), int(id), int(lv)
                         game.reset(player, id, lv)
                     
                     if data[-5:] == "65536":
-                        print(data)
                         player, id, lv, k = data.split('I')
                         player, id, lv = int(player), int(id), int(lv)
-                        game.skill_points(player, id, lv)
+                        game.up_skill_lv(player, id, lv)
+
+                    if data[-5:] == "btstt":
+                        player, c0, c1, k = data.split('I')
+                        player, c0, c1 = int(player), int(c0), int(c1)
+                        game.people_judge(player, c0, c1)
+
+                    if data[-5:] == "88223":
+                        player, id ,k = data.split('I')
+                        player, id = int(player), int(id)
+                        game.order_judge(player,id)
+                        
+                    # if data[-5:] == "moove":
+                    #     player, k = data.split('I')
+                    #     game.turn_move()
+
+                    if data[-5:] == "90067":
+                        print(44444444444)
+                        player, num, k = data.split('I')
+                        num =int(num)
+                        game.turn_move(num)
 
                     conn.sendall(pickle.dumps(game))
             else:
