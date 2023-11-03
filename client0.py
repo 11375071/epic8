@@ -398,7 +398,7 @@ def battle_start(characterid_record):
 
 def move_turn(n, player):
     n.send(str(player) + "I" + "moove")
-####################################################################################################################################################
+#############################################
 def really_start():
     global n, player
     image1 = ButtonImage("character1.jpg", ratio = 0.2)
@@ -460,6 +460,7 @@ def really_start():
         
         lista = game.data_return()    #返回二维数组，第一层四个元素，每个元素代表敌我的角色id
         turn = game.get_turn()
+        Text(game.log, Color.WHITE, "msyh.ttc", 20).draw(window, width * 0.5, height * 0.9)
         if len(lista) != 0:  
             for i in range(len(game.characterid_record[player])):
                 if player == 0:

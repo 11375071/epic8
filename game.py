@@ -23,12 +23,13 @@ class Game:
         self.speed=[]
         self.characterid_record = [[], []]
         self.turn = [0, 0]
+        self.log = ""
 
     def up_lv(self, player, id, lv):
         if self.AA.listplayer[player][id].lv!=80:
             self.AA.listplayer[player][id].hp = lv*self.AA.listplayer[player][id].maxhp*0.015+self.AA.listplayer[player][id].maxhp
-            self.AA.listplayer[player][id].atk = lv*self.AA.listplayer[player][id].maxatk*0.015+self.AA.listplayer[player][id].maxatk
-            self.AA.listplayer[player][id].df = lv*self.AA.listplayer[player][id].maxdf*0.015+self.AA.listplayer[player][id].maxdf
+            self.AA.listplayer[player][id].atk = lv*self.AA.listplayer[player][id].maxatk*0.012+self.AA.listplayer[player][id].maxatk
+            self.AA.listplayer[player][id].df = lv*self.AA.listplayer[player][id].maxdf*0.012+self.AA.listplayer[player][id].maxdf
             self.AA.listplayer[player][id].crit = lv*self.AA.listplayer[player][id].maxcrit*0.006+self.AA.listplayer[player][id].maxcrit
             self.AA.listplayer[player][id].crit_damage = lv*self.AA.listplayer[player][id].maxcrit_damage*0.01+self.AA.listplayer[player][id].maxcrit_damage
             self.AA.listplayer[player][id].lv = lv
@@ -42,9 +43,9 @@ class Game:
             if num == 2:
                 self.AA.listplayer[player][id].hp += self.AA.listplayer[player][id].maxhp*0.08
             if num == 3:
-                self.AA.listplayer[player][id].crit += 0.1
+                self.AA.listplayer[player][id].crit += (0.03 + self.AA.listplayer[player][id].maxcrit*0.08)
             if num == 4:
-                self.AA.listplayer[player][id].crit_damage += 0.23
+                self.AA.listplayer[player][id].crit_damage += (0.07 + self.AA.listplayer[player][id].maxcrit_damage / 15)
             if num == 5:
                 self.AA.listplayer[player][id].effect_hit += 0.2
             if num == 6:
@@ -134,6 +135,7 @@ class Game:
                 hit *= self.AA.listplayer[player][id].crit_damage
                 
             self.AA.listplayer[opp][self.characterid_record[opp][atk_goal]].hp -= hit
+            self.log = "player" + str(player) + "对player" + str(opp) + "造成了" + str(hit) + "点伤害"
         self.turn[1] += 1
         if self.turn[1] == len(self.characterid_record[0] * 2):
             self.order_judge(0, self.characterid_record[0][0])
