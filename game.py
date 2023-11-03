@@ -33,25 +33,30 @@ class Game:
             self.AA.listplayer[player][id].crit = lv*self.AA.listplayer[player][id].maxcrit*0.006+self.AA.listplayer[player][id].maxcrit
             self.AA.listplayer[player][id].crit_damage = lv*self.AA.listplayer[player][id].maxcrit_damage*0.01+self.AA.listplayer[player][id].maxcrit_damage
             self.AA.listplayer[player][id].lv = lv
+        if self.AA.listplayer[player][id].lv==80:
+            print("低防攻："+str((self.AA.listplayer[player][id].atk-2500)*(1+min(1, self.AA.listplayer[player][id].crit)*(self.AA.listplayer[player][id].crit_damage-1)))
+                  + "高防攻："+str((self.AA.listplayer[player][id].atk-10000)*(1+min(1, self.AA.listplayer[player][id].crit)*(self.AA.listplayer[player][id].crit_damage-1))))
 
     def extra_up(self, player, id, lv, num):
         if lv == 80 :
             if num == 0:
-                self.AA.listplayer[player][id].atk += self.AA.listplayer[player][id].maxatk*0.08
+                self.AA.listplayer[player][id].atk += (111 + self.AA.listplayer[player][id].maxatk*0.06)
             if num == 1:
-                self.AA.listplayer[player][id].df += self.AA.listplayer[player][id].maxdf*0.08
+                self.AA.listplayer[player][id].df += (40 + self.AA.listplayer[player][id].maxdf*0.06)
             if num == 2:
-                self.AA.listplayer[player][id].hp += self.AA.listplayer[player][id].maxhp*0.08
+                self.AA.listplayer[player][id].hp += (600 + self.AA.listplayer[player][id].maxhp*0.06)
             if num == 3:
-                self.AA.listplayer[player][id].crit += (0.03 + self.AA.listplayer[player][id].maxcrit*0.08)
+                self.AA.listplayer[player][id].crit += (0.045 + self.AA.listplayer[player][id].maxcrit*0.06)
             if num == 4:
-                self.AA.listplayer[player][id].crit_damage += (0.07 + self.AA.listplayer[player][id].maxcrit_damage / 15)
+                self.AA.listplayer[player][id].crit_damage += (0.1 + self.AA.listplayer[player][id].maxcrit_damage * 0.05)
             if num == 5:
                 self.AA.listplayer[player][id].effect_hit += 0.2
             if num == 6:
                 self.AA.listplayer[player][id].effect_defend += 0.2
             if num ==7:
                 self.AA.listplayer[player][id].speed += 15
+            print("低防攻："+str((self.AA.listplayer[player][id].atk-2500)*(1+min(1, self.AA.listplayer[player][id].crit)*(self.AA.listplayer[player][id].crit_damage-1)))
+                  + "高防攻："+str((self.AA.listplayer[player][id].atk-10000)*(1+min(1, self.AA.listplayer[player][id].crit)*(self.AA.listplayer[player][id].crit_damage-1))))
    
     def reset(self, player, id, lv):
         self.AA.listplayer[player][id].hp = self.AA.listplayer[player][id].maxhp
@@ -135,7 +140,7 @@ class Game:
                 hit *= self.AA.listplayer[player][id].crit_damage
                 
             self.AA.listplayer[opp][self.characterid_record[opp][atk_goal]].hp -= hit
-            self.log = "player" + str(player) + "对player" + str(opp) + "造成了" + str(hit) + "点伤害"
+            self.log = "攻：" + str(self.AA.listplayer[player][id].atk) + "防御：" + str(self.AA.listplayer[opp][self.characterid_record[opp][atk_goal]].df) + "player" + str(player) + "对player" + str(opp) + "造成了" + str(hit) + "点伤害"
         self.turn[1] += 1
         if self.turn[1] == len(self.characterid_record[0] * 2):
             self.order_judge(0, self.characterid_record[0][0])
